@@ -1,28 +1,35 @@
 import styled from "styled-components";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
+import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 
-const Header = ({ title }) => {
+const Header = ({ title, subTitle, actionsHidden }) => {
   return (
-    <Container>
+    <Container actionshidden={actionsHidden.toString()}>
       <TitleWrapper>
         <MainTitle>{title}</MainTitle>
+        <SubTitleWrapper>
+          <ArrowForwardIosSharpIcon style={{ marginRight: "10px" }} />
+          <SubTitle>{subTitle}</SubTitle>
+        </SubTitleWrapper>
       </TitleWrapper>
-      <ActionsWrapper>
-        <SearchContainer>
-          <Input placeholder="Search for products" />
-          <SearchButton>
-            <SearchRoundedIcon />
-            Search
-          </SearchButton>
-        </SearchContainer>
-        <ButtonsContainer>
-          <ButtonNewProduct>New Product</ButtonNewProduct>
-          <BUttonFavourite>
-            <StarRoundedIcon />
-          </BUttonFavourite>
-        </ButtonsContainer>
-      </ActionsWrapper>
+      {!actionsHidden && (
+        <ActionsWrapper>
+          <SearchContainer>
+            <Input placeholder="Search for products" />
+            <SearchButton>
+              <SearchRoundedIcon />
+              Search
+            </SearchButton>
+          </SearchContainer>
+          <ButtonsContainer>
+            <ButtonNewProduct>New Product</ButtonNewProduct>
+            <BUttonFavourite>
+              <StarRoundedIcon />
+            </BUttonFavourite>
+          </ButtonsContainer>
+        </ActionsWrapper>
+      )}
     </Container>
   );
 };
@@ -31,16 +38,28 @@ export default Header;
 
 const Container = styled.div`
   padding: 10px;
+  width: ${(props) => props.actionshidden && "80%"};
+  margin-left: ${(props) => props.actionshidden && "10%"};
 `;
 
 const TitleWrapper = styled.div`
   padding: 10px;
+  display: flex;
 `;
 
 const MainTitle = styled.h1`
   text-transform: uppercase;
   font-weight: 900;
 `;
+
+const SubTitleWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  color: #001eb9;
+`;
+
+const SubTitle = styled.h3``;
 
 const ActionsWrapper = styled.div`
   padding: 10px;
