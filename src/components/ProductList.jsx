@@ -25,7 +25,7 @@ const ProductList = () => {
       title: "Quantity",
     },
     {
-      id: 4,
+      id: 5,
       flxVal: 1,
       title: "",
     },
