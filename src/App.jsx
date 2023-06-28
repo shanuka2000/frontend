@@ -3,12 +3,14 @@ import styled from "styled-components";
 import Product from "./pages/Product";
 import FavouritProducts from "./pages/FavouritProducts";
 import SearchResult from "./pages/SearchResult";
+import AddNewProduct from "./pages/AddNewProduct";
 
 function App() {
   return (
     <Container>
       <Router>
         <Routes>
+          <Route path="/new" element={<AddNewProduct />} />
           <Route path="/results" element={<SearchResult />} />
           <Route path="/favourite" element={<FavouritProducts />} />
           <Route path="/" element={<Product />} />
