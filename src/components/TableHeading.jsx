@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 const TableHeading = ({ flxVal, title }) => {
   return (
-    <Container flxVal={flxVal}>
+    <Container flxval={flxVal}>
       <TitleText>{title}</TitleText>
     </Container>
   );
@@ -11,7 +11,7 @@ const TableHeading = ({ flxVal, title }) => {
 export default TableHeading;
 
 const Container = styled.div`
-  flex: ${(props) => props.flxVal};
+  flex: ${(props) => props.flxval};
 `;
 
 const TitleText = styled.h4`
