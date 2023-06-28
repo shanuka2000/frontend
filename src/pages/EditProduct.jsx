@@ -3,20 +3,16 @@ import Navigation from "../components/Navigation";
 import Header from "../components/Header";
 import CustomForm from "../components/CustomForm";
 
-const AddNewProduct = () => {
+const EditProduct = () => {
   return (
     <Container>
       <Navigation />
-      <Header
-        title="Products"
-        subTitle="Add new product"
-        actionsHidden={true}
-      />
+      <Header title="products" subTitle="Edit product" actionsHidden={true} />
       <CustomForm />
     </Container>
   );
 };
 
-export default AddNewProduct;
+export default EditProduct;
 
 const Container = styled.div``;
