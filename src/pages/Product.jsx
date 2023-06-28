@@ -7,7 +7,7 @@ const Product = () => {
   return (
     <Container>
       <Navigation />
-      <Header />
+      <Header title="Products" />
       <ProductList />
     </Container>
   );

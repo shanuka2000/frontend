@@ -1,7 +1,16 @@
 import styled from "styled-components";
+import Navigation from "../components/Navigation";
+import Header from "../components/Header";
+import ProductList from "../components/ProductList";
 
 const FavouritProducts = () => {
-  return <Container>FavouritProducts</Container>;
+  return (
+    <Container>
+      <Navigation />
+      <Header title="Favourite Products" />
+      <ProductList />
+    </Container>
+  );
 };
 
 export default FavouritProducts;

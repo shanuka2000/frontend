@@ -2,11 +2,11 @@ import styled from "styled-components";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 
-const Header = () => {
+const Header = ({ title }) => {
   return (
     <Container>
       <TitleWrapper>
-        <MainTitle>Products</MainTitle>
+        <MainTitle>{title}</MainTitle>
       </TitleWrapper>
       <ActionsWrapper>
         <SearchContainer>
