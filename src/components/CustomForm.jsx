@@ -1,8 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styled from "styled-components";
+import axios from "../axios.js";
 
-const CustomForm = () => {
+const CustomForm = ({ formType }) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [sku, setSku] = useState("");
+  const [qty, setQty] = useState("");
+  const [name, setName] = useState("");
+  const [description, setDescription] = useState("");
 
   const handleFileChange = (event) => {
     const files = event.target.files;
@@ -11,28 +16,86 @@ const CustomForm = () => {
     setSelectedFiles(fileArray);
   };
 
+  const handleInputSku = (event) => {
+    // Needs Optimization
+    const text = event.target.value;
+    setSku(text);
+  };
+
+  const handleInputName = (event) => {
+    // Needs Optimization
+    const text = event.target.value;
+    setName(text);
+  };
+
+  const handleInputQty = (event) => {
+    // Needs Optimization
+    const text = event.target.value;
+    setQty(text);
+  };
+
+  const handleInputDesc = (event) => {
+    // Needs Optimization
+    const text = event.target.value;
+    setDescription(text);
+  };
+
+  const submitProduct = async (event) => {
+    event.preventDefault();
+
+    if (formType === "add") {
+      const formData = new FormData();
+      formData.append("productName", name);
+      formData.append("productDescription", description);
+      formData.append("quantity", qty);
+      formData.append("sku", sku);
+      for (let i = 0; i < selectedFiles.length; i++) {
+        formData.append("images", selectedFiles[i]);
+      }
+
+      try {
+        const res = await axios.post("/new", formData, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        });
+
+        console.log("Product Saved:", res.data);
+        alert("Product Saved!");
+        setSku("");
+        setName("");
+        setQty("");
+        setDescription("");
+        setSelectedFiles([]);
+      } catch (error) {
+        alert("Error while saving product");
+        console.error("Error while saving product", error);
+      }
+    }
+  };
+
   return (
     <Container>
       <FormRow>
         <FormInputWrapper>
           <Label>SKU</Label>
-          <Input />
+          <Input type="text" value={sku} onChange={handleInputSku} />
         </FormInputWrapper>
       </FormRow>
       <FormRow>
         <FormInputWrapper>
           <Label>Name</Label>
-          <Input />
+          <Input type="text" value={name} onChange={handleInputName} />
         </FormInputWrapper>
         <FormInputWrapper>
           <Label>QTY</Label>
-          <Input />
+          <Input type="number" value={qty} onChange={handleInputQty} />
         </FormInputWrapper>
       </FormRow>
       <FormRow flxdir="true">
         <Label width="max-content">Product Description</Label>
         <SmallText>A small description about the product</SmallText>
-        <TextArea></TextArea>
+        <TextArea value={description} onChange={handleInputDesc}></TextArea>
       </FormRow>
       <FormRow>
         <RowLeft>
@@ -47,8 +110,7 @@ const CustomForm = () => {
             {selectedFiles.map((file, index) => (
               <Image
                 key={index}
-                // src={URL.createObjectURL(file)}
-                src="images/product-img.png"
+                src={URL.createObjectURL(file)}
                 alt={file.name}
               />
             ))}
@@ -67,7 +129,7 @@ const CustomForm = () => {
         </RowRight>
       </FormRow>
       <FormRow jstfy="end">
-        <Button>Add product</Button>
+        <Button onClick={submitProduct}>Add product</Button>
       </FormRow>
     </Container>
   );

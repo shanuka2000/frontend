@@ -12,7 +12,7 @@ const AddNewProduct = () => {
         subTitle="Add new product"
         actionsHidden={true}
       />
-      <CustomForm />
+      <CustomForm formType="add" />
     </Container>
   );
 };
