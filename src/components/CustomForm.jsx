@@ -1,19 +1,44 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import axios from "../axios.js";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 
-const CustomForm = ({ formType }) => {
+const CustomForm = ({ formType, isEditable }) => {
   const [selectedFiles, setSelectedFiles] = useState([]);
+  const [imageUrl, setImageUrl] = useState([]);
   const [sku, setSku] = useState("");
   const [qty, setQty] = useState("");
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
+  const [editable, setEditable] = useState(isEditable);
+  const { id } = useParams();
+
+  const getProductByID = async () => {
+    try {
+      const response = await axios.get("/find/" + id);
+      setName(response.data.productName);
+      setSku(response.data.sku);
+      setQty(response.data.quantity);
+      setDescription(response.data.productDescription);
+      setImageUrl([...response.data.images]);
+    } catch (error) {
+      console.error("Error fetching products:", error);
+    }
+  };
+
+  useEffect(() => {
+    if (isEditable) {
+      getProductByID();
+    }
+  }, []);
 
   const handleFileChange = (event) => {
     const files = event.target.files;
     const fileArray = Array.from(files);
 
     setSelectedFiles(fileArray);
+    setEditable(!editable);
   };
 
   const handleInputSku = (event) => {
@@ -107,17 +132,29 @@ const CustomForm = ({ formType }) => {
         </RowLeft>
         <RowRight>
           <PreviewContainer>
-            {selectedFiles.map((file, index) => (
-              <Image
-                key={index}
-                src={URL.createObjectURL(file)}
-                alt={file.name}
-              />
-            ))}
+            {editable ? (
+              <>
+                {imageUrl.map((item, index) => (
+                  <Image key={index} src={"http://localhost:9000/" + item} />
+                ))}
+              </>
+            ) : (
+              <>
+                {selectedFiles.map((file, index) => (
+                  <Image
+                    key={index}
+                    src={URL.createObjectURL(file)}
+                    alt={file.name}
+                  />
+                ))}
+              </>
+            )}
           </PreviewContainer>
           <CustomInputLabel>
             <LabelText>
-              {selectedFiles.length === 0 ? "Add Images" : "Edit Images"}
+              {selectedFiles.length === 0 && formType !== "edit"
+                ? "Add Images"
+                : "Edit Images"}
             </LabelText>
             <InputBtn
               type="file"
@@ -129,7 +166,9 @@ const CustomForm = ({ formType }) => {
         </RowRight>
       </FormRow>
       <FormRow jstfy="end">
-        <Button onClick={submitProduct}>Add product</Button>
+        <Button onClick={submitProduct}>
+          {formType === "edit" ? "Save Cahnges" : "Add Product"}
+        </Button>
       </FormRow>
     </Container>
   );
