@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   value: [],
+  searchData: [],
 };
 
 export const productSlice = createSlice({
@@ -15,9 +16,14 @@ export const productSlice = createSlice({
     setProducts: (state, action) => {
       state.value = action.payload;
     },
+    setSearchData: (state, action) => {
+      console.log("action", action.payload);
+      state.searchData = action.payload;
+    },
   },
 });
 
-export const { setProducts, removeProduct } = productSlice.actions;
+export const { setProducts, removeProduct, setSearchData } =
+  productSlice.actions;
 
 export default productSlice.reducer;

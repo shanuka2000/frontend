@@ -1,11 +1,17 @@
 import styled from "styled-components";
 import ResultList from "./ResultList";
+import { useSelector } from "react-redux";
 
 const ResultOutput = () => {
+  const result = useSelector((state) => state.search.value);
+  const searchName = useSelector((state) => state.search.searchName);
+
   return (
     <Container>
       <ResultOverviewWrapper>
-        <ResultOverview>4 results found for ‘Books’</ResultOverview>
+        <ResultOverview>
+          {result.length} results found for ‘{searchName}’
+        </ResultOverview>
       </ResultOverviewWrapper>
       <ResultList />
     </Container>

@@ -7,10 +7,33 @@ import axios from "../axios.js";
 import { useDispatch } from "react-redux";
 import { removeProduct } from "../features/productsSlice";
 import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 
 const ProductRow = ({ item }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [fav, setFav] = useState(
+    JSON.parse(localStorage.getItem("favourites"))
+  );
+  const products = useSelector((state) => state.product.value);
+
+  useEffect(() => {
+    const existingArr = localStorage.getItem("favourites");
+
+    if (existingArr === null) {
+      const favouriteProducts = products.map((item) => {
+        return {
+          _id: item._id,
+          favourite: false,
+        };
+      });
+
+      const updatedProductsString = JSON.stringify(favouriteProducts);
+
+      localStorage.setItem("favourites", updatedProductsString);
+    }
+  }, []);
 
   const deletItem = async () => {
     try {
@@ -29,7 +52,21 @@ const ProductRow = ({ item }) => {
     navigate("/edit/" + item._id);
   };
 
-  const markFavourite = () => {};
+  // Needs fixing
+  const markFavourite = () => {
+    const updatedProducts = fav.map((product) => {
+      if (product._id === item._id) {
+        return {
+          ...product,
+          favourite: true,
+        };
+      }
+      return product;
+    });
+
+    setFav(updatedProducts);
+    localStorage.setItem("favourites", JSON.stringify(updatedProducts));
+  };
 
   return (
     <Container>

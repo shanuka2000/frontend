@@ -3,8 +3,35 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setSearchData, setSearchName } from "../features/SearchSlice";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 const Header = ({ title, subTitle, actionsHidden }) => {
+  const products = useSelector((state) => state.product.value);
+  const dispatch = useDispatch();
+  const [search, setSearch] = useState("");
+  const [similerProducts, setSimilerProducts] = useState([]);
+  const navigation = useNavigate();
+
+  const handleInputSearch = (event) => {
+    const text = event.target.value;
+    setSearch(text);
+  };
+
+  const submitSearch = () => {
+    const keyword = search.toLowerCase();
+    const foundProducts = products.filter((item) =>
+      item.productName.toLowerCase().includes(keyword)
+    );
+    setSimilerProducts(foundProducts);
+    dispatch(setSearchData(foundProducts));
+    dispatch(setSearchName(search));
+    navigation("/results");
+  };
+
   return (
     <Container actionshidden={actionsHidden.toString()}>
       <TitleWrapper>
@@ -19,8 +46,12 @@ const Header = ({ title, subTitle, actionsHidden }) => {
       {!actionsHidden && (
         <ActionsWrapper>
           <SearchContainer>
-            <Input placeholder="Search for products" />
-            <SearchButton>
+            <Input
+              placeholder="Search for products"
+              type="text"
+              onChange={handleInputSearch}
+            />
+            <SearchButton onClick={submitSearch}>
               <SearchRoundedIcon />
               Search
             </SearchButton>

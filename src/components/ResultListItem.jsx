@@ -1,16 +1,21 @@
 import styled from "styled-components";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
+import { useEffect } from "react";
 
 const ResultListItem = ({ item }) => {
+  useEffect(() => {
+    console.log(item);
+  }, []);
+
   return (
     <Container>
       <Left>
         <NormalText opct="1" color="#001eb9" wgt="500">
           {item.sku}
         </NormalText>
-        <TitleText>{item.product_name}</TitleText>
+        <TitleText>{item.productName}</TitleText>
         <NormalText opct="0.5" color="#162427" wgt="400">
-          {item.desc}
+          {item.productDescription}
         </NormalText>
       </Left>
       <Right>
