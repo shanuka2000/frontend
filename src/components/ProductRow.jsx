@@ -6,9 +6,11 @@ import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
 import axios from "../axios.js";
 import { useDispatch } from "react-redux";
 import { removeProduct } from "../features/productsSlice";
+import { useNavigate } from "react-router-dom";
 
 const ProductRow = ({ item }) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const deletItem = async () => {
     try {
@@ -23,7 +25,9 @@ const ProductRow = ({ item }) => {
     }
   };
 
-  const editItem = () => {};
+  const editItem = () => {
+    navigate("/edit/" + item._id);
+  };
 
   const markFavourite = () => {};
 
