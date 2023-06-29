@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import TableHeading from "./TableHeading";
 import ProductRow from "./ProductRow";
+import { useEffect } from "react";
 
-const ProductList = () => {
+const ProductList = ({ products }) => {
   const heading = [
     {
       id: 1,
@@ -31,30 +32,6 @@ const ProductList = () => {
     },
   ];
 
-  const products = [
-    {
-      id: 1,
-      sku: "#CA25",
-      image: "https://i.ibb.co/Jzb2p5N/product-img.png",
-      product_name: "Item 01",
-      qty: 10,
-    },
-    {
-      id: 2,
-      sku: "#CA34",
-      image: "https://i.ibb.co/cNZ3gq0/product-img-1.png",
-      product_name: "Item 02",
-      qty: 5,
-    },
-    {
-      id: 3,
-      sku: "#CA34",
-      image: "https://i.ibb.co/xsYxzTS/product-img-2.png",
-      product_name: "Item 03",
-      qty: 5,
-    },
-  ];
-
   return (
     <Container>
       <ProductListTable>
@@ -68,8 +45,8 @@ const ProductList = () => {
           ))}
         </TableHeadingRow>
         <TableContents>
-          {products.map((item) => (
-            <ProductRow key={item.id} item={item} />
+          {products.map((item, index) => (
+            <ProductRow key={item._id} item={item} />
           ))}
         </TableContents>
       </ProductListTable>

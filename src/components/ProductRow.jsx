@@ -5,29 +5,38 @@ import EditIcon from "@mui/icons-material/Edit";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 
 const ProductRow = ({ item }) => {
+  const deletItem = (id) => {};
+
+  const editItem = (id) => {};
+
+  const markFavourite = (id) => {};
+
   return (
     <Container>
       <ItemBlock flx="1">
         <ItemText opct="0.5">{item.sku}</ItemText>
       </ItemBlock>
       <ItemBlock flx="1">
-        <ItemImage src={item.image} loading="lazy" />
+        <ItemImage
+          src={"http://localhost:9000/" + item.images[0]}
+          loading="lazy"
+        />
       </ItemBlock>
       <ItemBlock flx="2">
-        <ItemText opct="1">{item.product_name}</ItemText>
+        <ItemText opct="1">{item.productName}</ItemText>
       </ItemBlock>
       <ItemBlock flx="1">
-        <ItemText opct="1">{item.qty}</ItemText>
+        <ItemText opct="1">{item.quantity}</ItemText>
       </ItemBlock>
       <ItemBlock flx="1">
         <BtnWrapper>
-          <Button>
+          <Button onClick={deletItem(item._id)}>
             <DeleteIcon />
           </Button>
-          <Button>
+          <Button onClick={editItem(item._id)}>
             <EditIcon />
           </Button>
-          <Button>
+          <Button onClick={markFavourite(item._id)}>
             <StarRoundedIcon />
           </Button>
         </BtnWrapper>
