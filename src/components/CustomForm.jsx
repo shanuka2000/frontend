@@ -1,6 +1,16 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 const CustomForm = () => {
+  const [selectedFiles, setSelectedFiles] = useState([]);
+
+  const handleFileChange = (event) => {
+    const files = event.target.files;
+    const fileArray = Array.from(files);
+
+    setSelectedFiles(fileArray);
+  };
+
   return (
     <Container>
       <FormRow>
@@ -33,7 +43,27 @@ const CustomForm = () => {
           </SmallText>
         </RowLeft>
         <RowRight>
-          <SimpleButton>Add Images</SimpleButton>
+          <PreviewContainer>
+            {selectedFiles.map((file, index) => (
+              <Image
+                key={index}
+                // src={URL.createObjectURL(file)}
+                src="images/product-img.png"
+                alt={file.name}
+              />
+            ))}
+          </PreviewContainer>
+          <CustomInputLabel>
+            <LabelText>
+              {selectedFiles.length === 0 ? "Add Images" : "Edit Images"}
+            </LabelText>
+            <InputBtn
+              type="file"
+              accept=".jpg, .jpeg, .png, .svg, .gif"
+              multiple
+              onChange={handleFileChange}
+            />
+          </CustomInputLabel>
         </RowRight>
       </FormRow>
       <FormRow jstfy="end">
@@ -106,15 +136,46 @@ const RowLeft = styled.div`
 
 const RowRight = styled.div`
   flex: 4;
+
+  display: flex;
 `;
 
-const SimpleButton = styled.button`
-  background-color: transparent;
+const PreviewContainer = styled.div``;
+
+const Image = styled.img`
+  width: 60px;
+  height: 60px;
+  margin-left: 10px;
+  border-radius: 10px;
+`;
+
+const CustomInputLabel = styled.label`
+  display: inline-block;
+  font-weight: 600;
+  color: #001eb9;
+  text-align: center;
+  font-size: 14px;
+  text-decoration: underline;
+  cursor: pointer;
+  margin-left: 10px;
+`;
+
+const LabelText = styled.p``;
+
+const InputBtn = styled.input`
+  /* background-color: transparent;
   border: none;
   color: #001eb9;
   font-weight: 700;
   text-decoration: underline;
-  cursor: pointer;
+  cursor: pointer; */
+
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
 `;
 
 const Button = styled.button`
