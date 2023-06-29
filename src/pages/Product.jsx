@@ -7,7 +7,7 @@ const Product = () => {
   return (
     <Container>
       <Navigation />
-      <Header title="Products" />
+      <Header title="Products" actionsHidden={false} />
       <ProductList />
     </Container>
   );

@@ -7,7 +7,7 @@ const SearchResult = () => {
   return (
     <Container>
       <Navigation />
-      <Header title="Products" />
+      <Header title="Products" actionsHidden={false} />
       <ResultOutput />
     </Container>
   );

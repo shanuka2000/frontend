@@ -7,7 +7,7 @@ const FavouritProducts = () => {
   return (
     <Container>
       <Navigation />
-      <Header title="Favourite Products" />
+      <Header title="Favourite Products" actionsHidden={false} />
       <ProductList />
     </Container>
   );

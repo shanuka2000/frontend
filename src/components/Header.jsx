@@ -8,10 +8,12 @@ const Header = ({ title, subTitle, actionsHidden }) => {
     <Container actionshidden={actionsHidden.toString()}>
       <TitleWrapper>
         <MainTitle>{title}</MainTitle>
-        <SubTitleWrapper>
-          <ArrowForwardIosSharpIcon style={{ marginRight: "10px" }} />
-          <SubTitle>{subTitle}</SubTitle>
-        </SubTitleWrapper>
+        {actionsHidden && (
+          <SubTitleWrapper>
+            <ArrowForwardIosSharpIcon style={{ marginRight: "10px" }} />
+            <SubTitle>{subTitle}</SubTitle>
+          </SubTitleWrapper>
+        )}
       </TitleWrapper>
       {!actionsHidden && (
         <ActionsWrapper>
@@ -38,8 +40,8 @@ export default Header;
 
 const Container = styled.div`
   padding: 10px;
-  width: ${(props) => props.actionshidden && "80%"};
-  margin-left: ${(props) => props.actionshidden && "10%"};
+  width: ${(props) => props.actionshidden == "true" && "80%"};
+  margin-left: ${(props) => props.actionshidden == "true" && "10%"};
 `;
 
 const TitleWrapper = styled.div`
