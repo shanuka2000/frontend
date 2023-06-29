@@ -2,6 +2,7 @@ import styled from "styled-components";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
 import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
+import { Link } from "react-router-dom";
 
 const Header = ({ title, subTitle, actionsHidden }) => {
   return (
@@ -25,10 +26,10 @@ const Header = ({ title, subTitle, actionsHidden }) => {
             </SearchButton>
           </SearchContainer>
           <ButtonsContainer>
-            <ButtonNewProduct>New Product</ButtonNewProduct>
-            <BUttonFavourite>
+            <ButtonNewProduct to="/new">New Product</ButtonNewProduct>
+            <ButtonFavourite to="favourite">
               <StarRoundedIcon />
-            </BUttonFavourite>
+            </ButtonFavourite>
           </ButtonsContainer>
         </ActionsWrapper>
       )}
@@ -110,18 +111,20 @@ const ButtonsContainer = styled.div`
   justify-content: flex-end;
 `;
 
-const ButtonNewProduct = styled.button`
+const ButtonNewProduct = styled(Link)`
+  text-decoration: none;
   padding: 10px 5%;
   background-color: #001eb9;
   color: #ffffff;
   border: none;
   border-radius: 10px;
+  font-size: 12px;
   font-weight: 500;
   margin-right: 10px;
   cursor: pointer;
 `;
 
-const BUttonFavourite = styled.button`
+const ButtonFavourite = styled(Link)`
   padding: 5px 10px;
   border: 1px solid #001eb9;
   border-radius: 10px;
