@@ -2,16 +2,18 @@ import styled from "styled-components";
 import Navigation from "../components/Navigation";
 import Header from "../components/Header";
 import ProductList from "../components/ProductList";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import axios from "../axios.js";
+import { useDispatch } from "react-redux";
+import { setProducts } from "../features/productsSlice";
 
 const Product = () => {
-  const [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
 
   const fetchProducts = async () => {
     try {
       const response = await axios.get("/all");
-      setProducts(response.data);
+      dispatch(setProducts(response.data));
     } catch (error) {
       console.error("Error fetching products:", error);
     }
@@ -19,15 +21,13 @@ const Product = () => {
 
   useEffect(() => {
     fetchProducts();
-
-    console.log(products);
   }, []);
 
   return (
     <Container>
       <Navigation />
       <Header title="Products" actionsHidden={false} />
-      <ProductList products={products} />
+      <ProductList />
     </Container>
   );
 };

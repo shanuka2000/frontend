@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import TableHeading from "./TableHeading";
 import ProductRow from "./ProductRow";
-import { useEffect } from "react";
+import { useSelector } from "react-redux";
 
-const ProductList = ({ products }) => {
+const ProductList = () => {
   const heading = [
     {
       id: 1,
@@ -32,6 +32,8 @@ const ProductList = ({ products }) => {
     },
   ];
 
+  const products = useSelector((state) => state.product.value);
+
   return (
     <Container>
       <ProductListTable>
@@ -45,7 +47,7 @@ const ProductList = ({ products }) => {
           ))}
         </TableHeadingRow>
         <TableContents>
-          {products.map((item, index) => (
+          {products.map((item) => (
             <ProductRow key={item._id} item={item} />
           ))}
         </TableContents>

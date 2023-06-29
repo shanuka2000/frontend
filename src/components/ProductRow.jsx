@@ -1,15 +1,31 @@
-import { useEffect } from "react";
 import styled from "styled-components";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import StarRoundedIcon from "@mui/icons-material/StarRounded";
+import StarBorderRoundedIcon from "@mui/icons-material/StarBorderRounded";
+import axios from "../axios.js";
+import { useDispatch } from "react-redux";
+import { removeProduct } from "../features/productsSlice";
 
 const ProductRow = ({ item }) => {
-  const deletItem = (id) => {};
+  const dispatch = useDispatch();
 
-  const editItem = (id) => {};
+  const deletItem = async () => {
+    try {
+      const itemId = item._id;
 
-  const markFavourite = (id) => {};
+      const res = await axios.delete("/remove/" + itemId);
+      console.log(res);
+
+      dispatch(removeProduct(itemId));
+    } catch (err) {
+      console.log("Error", err);
+    }
+  };
+
+  const editItem = () => {};
+
+  const markFavourite = () => {};
 
   return (
     <Container>
@@ -30,14 +46,14 @@ const ProductRow = ({ item }) => {
       </ItemBlock>
       <ItemBlock flx="1">
         <BtnWrapper>
-          <Button onClick={deletItem(item._id)}>
+          <Button onClick={deletItem}>
             <DeleteIcon />
           </Button>
-          <Button onClick={editItem(item._id)}>
+          <Button onClick={editItem}>
             <EditIcon />
           </Button>
-          <Button onClick={markFavourite(item._id)}>
-            <StarRoundedIcon />
+          <Button onClick={markFavourite}>
+            <StarBorderRoundedIcon />
           </Button>
         </BtnWrapper>
       </ItemBlock>
@@ -73,6 +89,7 @@ const ItemImage = styled.img`
   width: 60px;
   height: 60px;
   object-fit: cover;
+  border-radius: 10px;
 `;
 
 const BtnWrapper = styled.div`
