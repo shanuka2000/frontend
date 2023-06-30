@@ -9,6 +9,7 @@ import { removeProduct } from "../features/productsSlice";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import ConfirmDelete from "./ConfirmDelete.jsx";
 
 const ProductRow = ({ item }) => {
   const dispatch = useDispatch();
@@ -38,11 +39,14 @@ const ProductRow = ({ item }) => {
   const deletItem = async () => {
     try {
       const itemId = item._id;
+      let text =
+        "Are you sure!\nYou will not be able to undo this action if you proceed!";
+      if (confirm(text) == true) {
+        const res = await axios.delete("/remove/" + itemId);
+        console.log(res);
 
-      const res = await axios.delete("/remove/" + itemId);
-      console.log(res);
-
-      dispatch(removeProduct(itemId));
+        dispatch(removeProduct(itemId));
+      }
     } catch (err) {
       console.log("Error", err);
     }
@@ -98,6 +102,7 @@ const ProductRow = ({ item }) => {
           </Button>
         </BtnWrapper>
       </ItemBlock>
+      <ConfirmDelete />
     </Container>
   );
 };
